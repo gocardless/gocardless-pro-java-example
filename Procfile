@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar build/libs/gocardless-pro-java-example-fat.jar server
+web: java $JAVA_OPTS -Ddw.server.applicationConnectors[0].port=$PORT -jar build/libs/gocardless-pro-java-example-fat.jar server config.yml

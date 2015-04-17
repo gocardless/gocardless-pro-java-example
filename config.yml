@@ -1,0 +1,5 @@
+server:
+    type: default
+    applicationConnectors:
+        -   type: http
+            port: 8080
