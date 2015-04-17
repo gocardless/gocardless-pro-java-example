@@ -23,6 +23,6 @@ public class WebhookResource {
                               String body) {
         signatureVerifier.verify(body, key, signature);
 
-        LOGGER.info("Received webhook: key [{}], signature [{}], body [{}]", key, signature, body);
+        LOGGER.info("Received webhook: body [{}]", body);
     }
 }
