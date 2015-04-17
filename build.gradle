@@ -1,7 +1,23 @@
 apply plugin: 'java'
+apply plugin: 'eu.appsatori.fatjar'
+apply plugin: 'application'
 
-sourceCompatibility = 1.8
-version = '1.0'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+mainClassName = 'com.gocardless.example.GoCardlessExampleApplication'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -11,3 +27,19 @@ dependencies {
     compile 'com.gocardless:gocardless-pro:0.0.1'
     compile 'io.dropwizard:dropwizard-core:0.8.1'
 }
+
+fatJar {
+    classifier 'fat'
+
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+}
+
+run {
+    args 'server'
+}
+
+task stage(dependsOn: ['clean', 'fatJar'])
