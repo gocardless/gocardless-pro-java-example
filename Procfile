@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Ddw.server.applicationConnectors[0].port=$PORT -jar build/libs/gocardless-pro-java-example-fat.jar server config.yml
+web: java $JAVA_OPTS -Ddw.server.applicationConnectors[0].port=$PORT -Ddw.goCardless.apiKey=$GC_API_KEY -Ddw.goCardless.apiSecret=$GC_API_SECRET -jar build/libs/gocardless-pro-java-example-fat.jar server config.yml
