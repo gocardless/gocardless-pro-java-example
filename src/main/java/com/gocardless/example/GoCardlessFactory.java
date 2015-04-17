@@ -2,7 +2,7 @@ package com.gocardless.example;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gocardless.example.core.WebhookSignatureVerifier;
+import com.gocardless.example.core.WebhookVerifier;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class GoCardlessFactory {
@@ -21,7 +21,7 @@ public class GoCardlessFactory {
         this.apiSecret = apiSecret;
     }
 
-    public WebhookSignatureVerifier buildSignatureVerifier() {
-        return new WebhookSignatureVerifier(apiSecret);
+    public WebhookVerifier buildSignatureVerifier() {
+        return new WebhookVerifier(apiKey, apiSecret);
     }
 }

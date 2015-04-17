@@ -1,7 +1,7 @@
 package com.gocardless.example;
 
-import com.gocardless.example.core.WebhookSignatureVerifier;
-import com.gocardless.example.providers.InvalidWebhookSignatureExceptionMapper;
+import com.gocardless.example.core.WebhookVerifier;
+import com.gocardless.example.providers.InvalidWebhookExceptionMapper;
 import com.gocardless.example.resources.HelloWorldResource;
 import com.gocardless.example.resources.WebhookResource;
 import io.dropwizard.Application;
@@ -16,9 +16,9 @@ public class GoCardlessExampleApplication extends Application<GoCardlessExampleC
     public void run(GoCardlessExampleConfiguration configuration, Environment environment) throws Exception {
         environment.jersey().register(new HelloWorldResource());
 
-        WebhookSignatureVerifier signatureVerifier = configuration.getGoCardless().buildSignatureVerifier();
+        WebhookVerifier signatureVerifier = configuration.getGoCardless().buildSignatureVerifier();
         environment.jersey().register(new WebhookResource(signatureVerifier));
 
-        environment.jersey().register(new InvalidWebhookSignatureExceptionMapper());
+        environment.jersey().register(new InvalidWebhookExceptionMapper());
     }
 }
