@@ -7,3 +7,4 @@ server:
 goCardless:
     apiKey: ${GC_API_KEY:-}
     apiSecret: ${GC_API_SECRET:-}
+    environment: ${GC_ENVIRONMENT:-sandbox}
