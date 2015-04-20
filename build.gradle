@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'eu.appsatori.fatjar'
 apply plugin: 'application'
 
 sourceCompatibility = '1.7'
@@ -8,16 +7,6 @@ targetCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 mainClassName = 'com.enterprisesolutions.EnterpriseSolutionsApplication'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
-    }
-}
 
 repositories {
     mavenCentral()
@@ -32,18 +21,18 @@ dependencies {
     testCompile 'io.dropwizard:dropwizard-testing:0.8.1'
 }
 
-fatJar {
-    classifier 'fat'
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }}
+
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
 
     manifest {
         attributes 'Main-Class': mainClassName
     }
-
-    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
 }
 
 run {
     args 'server'
 }
 
-task stage(dependsOn: ['clean', 'fatJar'])
+task stage(dependsOn: ['clean', 'jar'])
