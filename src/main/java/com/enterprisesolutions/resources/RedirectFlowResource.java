@@ -1,5 +1,6 @@
 package com.enterprisesolutions.resources;
 
+import com.enterprisesolutions.api.Product;
 import com.enterprisesolutions.views.HomeView;
 import com.gocardless.GoCardlessClient;
 import com.gocardless.resources.Creditor;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
@@ -31,13 +33,13 @@ public class RedirectFlowResource {
 
     @GET
     @Path("/purchase")
-    public Response startFlow(@Session HttpSession session) {
+    public Response startFlow(@Session HttpSession session, @QueryParam("product") Product product) {
         Creditor creditor = goCardless.creditors().list().execute().getItems().get(0);
 
         RedirectFlow flow = goCardless.redirectFlows().create()
-                .withDescription("Enterprise Solutions subscription")
+                .withDescription(product.getDescription())
                 .withSessionToken(session.getId())
-                .withSuccessRedirectUrl("http://localhost:5000/redirect")
+                .withSuccessRedirectUrl("http://localhost:5000/redirect?product=" + product.name())
                 .withLinksCreditor(creditor.getId())
                 .execute();
 

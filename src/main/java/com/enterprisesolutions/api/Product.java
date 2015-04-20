@@ -3,16 +3,16 @@ package com.enterprisesolutions.api;
 public enum Product {
     BEAN_PROVIDER("BeanProvider", 1000);
 
-    private final String name;
+    private final String description;
     private final int price;
 
-    Product(String name, int price) {
-        this.name = name;
+    Product(String description, int price) {
+        this.description = description;
         this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
     public int getPrice() {
