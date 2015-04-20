@@ -1,8 +1,8 @@
-package com.gocardless.example;
+package com.enterprisesolutions;
 
+import com.enterprisesolutions.core.WebhookVerifier;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gocardless.example.core.WebhookVerifier;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class GoCardlessFactory {

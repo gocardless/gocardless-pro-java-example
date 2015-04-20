@@ -1,6 +1,6 @@
-package com.gocardless.example.core;
+package com.enterprisesolutions.core;
 
-import com.gocardless.example.exceptions.InvalidWebhookException;
+import com.enterprisesolutions.exceptions.InvalidWebhookException;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.Mac;

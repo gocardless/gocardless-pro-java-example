@@ -1,6 +1,6 @@
-package com.gocardless.example.providers;
+package com.enterprisesolutions.providers;
 
-import com.gocardless.example.exceptions.InvalidWebhookException;
+import com.enterprisesolutions.exceptions.InvalidWebhookException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

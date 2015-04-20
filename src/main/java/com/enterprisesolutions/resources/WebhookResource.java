@@ -1,6 +1,6 @@
-package com.gocardless.example.resources;
+package com.enterprisesolutions.resources;
 
-import com.gocardless.example.core.WebhookVerifier;
+import com.enterprisesolutions.core.WebhookVerifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

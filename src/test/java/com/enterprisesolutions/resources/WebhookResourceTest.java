@@ -1,8 +1,8 @@
-package com.gocardless.example.resources;
+package com.enterprisesolutions.resources;
 
-import com.gocardless.example.core.WebhookVerifier;
-import com.gocardless.example.exceptions.InvalidWebhookException;
-import com.gocardless.example.providers.InvalidWebhookExceptionMapper;
+import com.enterprisesolutions.core.WebhookVerifier;
+import com.enterprisesolutions.exceptions.InvalidWebhookException;
+import com.enterprisesolutions.providers.InvalidWebhookExceptionMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Rule;
 import org.junit.Test;

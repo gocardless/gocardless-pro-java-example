@@ -1,4 +1,4 @@
-package com.gocardless.example.views;
+package com.enterprisesolutions.views;
 
 import io.dropwizard.views.View;
 
