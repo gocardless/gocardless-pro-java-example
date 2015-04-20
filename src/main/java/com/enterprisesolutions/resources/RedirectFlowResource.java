@@ -2,9 +2,11 @@ package com.enterprisesolutions.resources;
 
 import com.enterprisesolutions.api.Product;
 import com.enterprisesolutions.views.HomeView;
+import com.enterprisesolutions.views.SuccessView;
 import com.gocardless.GoCardlessClient;
 import com.gocardless.resources.Creditor;
 import com.gocardless.resources.RedirectFlow;
+import com.gocardless.resources.Subscription;
 import io.dropwizard.jersey.sessions.Session;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+
+import static com.gocardless.services.SubscriptionService.SubscriptionCreateRequest.IntervalUnit.MONTHLY;
 
 @Path("/")
 public class RedirectFlowResource {
@@ -50,5 +54,26 @@ public class RedirectFlowResource {
                 .execute();
 
         return Response.seeOther(URI.create(flow.getRedirectUrl())).build();
+    }
+
+    @GET
+    @Path("/redirect")
+    public SuccessView completeFlow(@Session HttpSession session,
+                                    @QueryParam("product") Product product,
+                                    @QueryParam("redirect_flow_id") String redirectFlowId) {
+        RedirectFlow redirectFlow = goCardless.redirectFlows().complete(redirectFlowId)
+                .withSessionToken(session.getId())
+                .execute();
+
+        Subscription subscription = goCardless.subscriptions().create()
+                .withAmount(product.getPrice())
+                .withCurrency("GBP")
+                .withName(product.getDescription())
+                .withInterval(1)
+                .withIntervalUnit(MONTHLY)
+                .withLinksMandate(redirectFlow.getLinks().getMandate())
+                .execute();
+
+        return new SuccessView(product);
     }
 }

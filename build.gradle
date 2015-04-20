@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.gocardless:gocardless-pro:0.0.1'
+    compile 'com.gocardless:gocardless-pro:0.0.3'
 
     compile 'io.dropwizard:dropwizard-core:0.8.1'
     compile 'io.dropwizard:dropwizard-views-freemarker:0.8.1'

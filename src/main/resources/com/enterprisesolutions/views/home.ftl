@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="com.enterprisesolutions.views.HomeView" -->
 <#import "base.ftl" as layout />
 
 <@layout.template>
@@ -7,4 +8,3 @@
     </div>
 </div>
 </@layout.template>
-∞§¢
