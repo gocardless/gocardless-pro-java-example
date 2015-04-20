@@ -8,12 +8,7 @@ import org.junit.Test;
 import static com.google.common.base.Charsets.UTF_8;
 
 public class WebhookVerifierTest {
-    private WebhookVerifier verifier;
-
-    @Before
-    public void setUp() {
-        verifier = new WebhookVerifier("key", "ElfJ-3tF9I_zutNVK2lBABQrw-BgAhkZKIlvmbgk");
-    }
+    private static WebhookVerifier verifier = new WebhookVerifier("key", "ElfJ-3tF9I_zutNVK2lBABQrw-BgAhkZKIlvmbgk");
 
     @Test
     public void shouldVerifyWebhookWithCorrectSignature() throws Exception {
