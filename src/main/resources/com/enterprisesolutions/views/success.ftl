@@ -6,11 +6,19 @@
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4 product-image">
-        <img class="center-block" src="/assets/images/${product}.jpg" />
+        <img class="center-block" src="/assets/images/${product!"unknown"}.jpg" />
     </div>
 </div>
 
 <div class="text-center">
-    You are now renting a ${product.description} for £${product.price} per month.  The first payment will be taken on ${firstPaymentDate}.
+    <#if product??>
+        You are now renting a ${product.description} for £${product.price} per month.
+    <#else>
+        You are now renting an unknown product.
+    </#if>
+
+    <#if firstPaymentDate??>
+        The first payment will be taken on ${firstPaymentDate}.
+    </#if>
 </div>
 </@layout.template>
