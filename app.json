@@ -1,0 +1,19 @@
+{
+  "name": "GoCardless Pro Java Example",
+  "description": "Example Java application for collecting recurring payments using GoCardless",
+  "repository": "https://github.com/gocardless/gocardless-pro-java-example",
+  "logo": "https://gocardless.com/images/logos/gocardless-square.png",
+  "success_url": "/",
+  "env": {
+    "GC_API_KEY": {
+      "description": "GoCardless API key"
+    },
+    "GC_API_SECRET": {
+      "description": "GoCardless API secret"
+    },
+    "GC_ENVIRONMENT": {
+      "description": "GoCardless environment (one of live, sandbox)",
+      "default": "sandbox"
+    }
+  }
+}
