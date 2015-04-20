@@ -19,12 +19,8 @@
 
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center">Enterprise Solutions</h1>
-            <h3 class="text-center"><em>Putting the Enterprise in Solutions since 2015</em></h3>
-        </div>
-    </div>
+    <h1 class="text-center">Enterprise Solutions</h1>
+    <h3 class="text-center"><em>Putting the Enterprise in Solutions since 2015</em></h3>
 
     <#nested />
 </div>

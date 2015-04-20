@@ -41,7 +41,7 @@ public class RedirectFlowResource {
                               @QueryParam("product") Product product) {
         Creditor creditor = goCardless.creditors().list().execute().getItems().get(0);
 
-        URI successUri = UriBuilder.fromUri(uriInfo.getRequestUri())
+        URI redirectUri = UriBuilder.fromUri(uriInfo.getRequestUri())
                 .replacePath("/redirect")
                 .replaceQueryParam("product", product)
                 .build();
@@ -49,7 +49,7 @@ public class RedirectFlowResource {
         RedirectFlow flow = goCardless.redirectFlows().create()
                 .withDescription(String.format("%s (£%s per month)", product.getDescription(), product.getPrice()))
                 .withSessionToken(session.getId())
-                .withSuccessRedirectUrl(successUri.toString())
+                .withSuccessRedirectUrl(redirectUri.toString())
                 .withLinksCreditor(creditor.getId())
                 .execute();
 
@@ -58,9 +58,9 @@ public class RedirectFlowResource {
 
     @GET
     @Path("/redirect")
-    public SuccessView completeFlow(@Session HttpSession session,
-                                    @QueryParam("product") Product product,
-                                    @QueryParam("redirect_flow_id") String redirectFlowId) {
+    public Response completeFlow(@Session HttpSession session,
+                                 @QueryParam("product") Product product,
+                                 @QueryParam("redirect_flow_id") String redirectFlowId) {
         RedirectFlow redirectFlow = goCardless.redirectFlows().complete(redirectFlowId)
                 .withSessionToken(session.getId())
                 .execute();
@@ -74,6 +74,18 @@ public class RedirectFlowResource {
                 .withLinksMandate(redirectFlow.getLinks().getMandate())
                 .execute();
 
-        return new SuccessView(product);
+        URI successUri = UriBuilder.fromUri("/success")
+                .replaceQueryParam("product", product)
+                .replaceQueryParam("firstPaymentDate", subscription.getUpcomingPayments().get(0).getChargeDate())
+                .build();
+
+        return Response.seeOther(successUri).build();
+    }
+
+    @GET
+    @Path("/success")
+    public SuccessView success(@QueryParam("product") Product product,
+                               @QueryParam("firstPaymentDate") String firstPaymentDate) {
+        return new SuccessView(product, firstPaymentDate);
     }
 }
