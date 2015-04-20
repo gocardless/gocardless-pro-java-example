@@ -35,7 +35,7 @@ public class RedirectFlowResource {
     }
 
     @GET
-    @Path("/purchase")
+    @Path("/subscribe")
     public Response startFlow(@Session HttpSession session,
                               @Context UriInfo uriInfo,
                               @QueryParam("product") Product product) {
@@ -47,7 +47,7 @@ public class RedirectFlowResource {
                 .build();
 
         RedirectFlow flow = goCardless.redirectFlows().create()
-                .withDescription(product.getDescription())
+                .withDescription(String.format("%s (£%s per month)", product.getDescription(), product.getPrice()))
                 .withSessionToken(session.getId())
                 .withSuccessRedirectUrl(successUri.toString())
                 .withLinksCreditor(creditor.getId())
@@ -66,7 +66,7 @@ public class RedirectFlowResource {
                 .execute();
 
         Subscription subscription = goCardless.subscriptions().create()
-                .withAmount(product.getPrice())
+                .withAmount(product.getPrice() * 100)
                 .withCurrency("GBP")
                 .withName(product.getDescription())
                 .withInterval(1)

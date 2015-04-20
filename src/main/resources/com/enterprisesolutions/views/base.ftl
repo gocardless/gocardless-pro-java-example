@@ -9,6 +9,7 @@
     <title>Enterprise Solutions</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/styles/styles.css">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -21,6 +22,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="text-center">Enterprise Solutions</h1>
+            <h3 class="text-center"><em>Putting the Enterprise in Solutions since 2015</em></h3>
         </div>
     </div>
 

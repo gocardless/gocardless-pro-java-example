@@ -7,6 +7,7 @@ import com.enterprisesolutions.resources.RedirectFlowResource;
 import com.enterprisesolutions.resources.WebhookResource;
 import com.gocardless.GoCardlessClient;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.jersey.sessions.HttpSessionFactory;
@@ -24,6 +25,8 @@ public class EnterpriseSolutionsApplication extends Application<EnterpriseSoluti
     @Override
     public void initialize(Bootstrap<EnterpriseSolutionsConfiguration> bootstrap) {
         bootstrap.addBundle(new ViewBundle<>());
+        bootstrap.addBundle(new AssetsBundle());
+
         bootstrap.setConfigurationSourceProvider(
                 new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
                         new EnvironmentVariableSubstitutor(false)

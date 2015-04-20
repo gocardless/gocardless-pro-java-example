@@ -2,28 +2,32 @@ package com.enterprisesolutions.api;
 
 import org.apache.commons.lang3.StringUtils;
 
-public enum Product {
-    BEAN_PROVIDER("BeanProvider", 1000);
+import static com.google.common.base.CaseFormat.LOWER_UNDERSCORE;
+import static com.google.common.base.CaseFormat.UPPER_CAMEL;
+import static com.google.common.base.CaseFormat.UPPER_UNDERSCORE;
 
-    private final String description;
+public enum Product {
+    BEAN_PROVIDER(10),
+    BRIDGE_DECORATOR(50),
+    TRANSPORT_FACTORY(100);
+
     private final int price;
 
-    Product(String description, int price) {
-        this.description = description;
+    Product(int price) {
         this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public int getPrice() {
         return price;
     }
 
+    public String getDescription() {
+        return UPPER_UNDERSCORE.to(UPPER_CAMEL, name());
+    }
+
     @Override
     public String toString() {
-        return StringUtils.lowerCase(name());
+        return UPPER_UNDERSCORE.to(LOWER_UNDERSCORE, name());
     }
 
     public static Product fromString(String value) {
