@@ -1,10 +1,12 @@
 package com.enterprisesolutions;
 
-import com.enterprisesolutions.resources.ExampleResource;
 import com.enterprisesolutions.core.WebhookVerifier;
 import com.enterprisesolutions.providers.InvalidWebhookExceptionMapper;
+import com.enterprisesolutions.resources.ExampleResource;
 import com.enterprisesolutions.resources.WebhookResource;
 import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -17,6 +19,11 @@ public class EnterpriseSolutionsApplication extends Application<EnterpriseSoluti
     @Override
     public void initialize(Bootstrap<EnterpriseSolutionsConfiguration> bootstrap) {
         bootstrap.addBundle(new ViewBundle<>());
+        bootstrap.setConfigurationSourceProvider(
+                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor(false)
+                )
+        );
     }
 
     @Override
