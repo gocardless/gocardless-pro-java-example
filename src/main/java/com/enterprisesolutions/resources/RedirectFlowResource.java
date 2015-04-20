@@ -10,12 +10,9 @@ import io.dropwizard.jersey.sessions.Session;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-
-import static javax.ws.rs.core.MediaType.TEXT_HTML;
 
 @Path("/")
 public class RedirectFlowResource {
@@ -26,7 +23,6 @@ public class RedirectFlowResource {
     }
 
     @GET
-    @Produces(TEXT_HTML)
     public HomeView home() {
         return new HomeView();
     }
