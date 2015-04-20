@@ -11,7 +11,10 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 
 @Path("/")
@@ -29,13 +32,20 @@ public class RedirectFlowResource {
 
     @GET
     @Path("/purchase")
-    public Response startFlow(@Session HttpSession session, @QueryParam("product") Product product) {
+    public Response startFlow(@Session HttpSession session,
+                              @Context UriInfo uriInfo,
+                              @QueryParam("product") Product product) {
         Creditor creditor = goCardless.creditors().list().execute().getItems().get(0);
+
+        URI successUri = UriBuilder.fromUri(uriInfo.getRequestUri())
+                .replacePath("/redirect")
+                .replaceQueryParam("product", product)
+                .build();
 
         RedirectFlow flow = goCardless.redirectFlows().create()
                 .withDescription(product.getDescription())
                 .withSessionToken(session.getId())
-                .withSuccessRedirectUrl("http://localhost:5000/redirect?product=" + product.name())
+                .withSuccessRedirectUrl(successUri.toString())
                 .withLinksCreditor(creditor.getId())
                 .execute();
 
