@@ -9,9 +9,12 @@ import com.gocardless.GoCardlessClient;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.jersey.sessions.HttpSessionFactory;
+import io.dropwizard.jersey.sessions.SessionFactoryProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import org.eclipse.jetty.server.session.SessionHandler;
 
 public class EnterpriseSolutionsApplication extends Application<EnterpriseSolutionsConfiguration> {
     public static void main(String[] args) throws Exception {
@@ -38,5 +41,7 @@ public class EnterpriseSolutionsApplication extends Application<EnterpriseSoluti
 
         environment.jersey().register(new GoCardlessApiExceptionMapper());
         environment.jersey().register(new InvalidWebhookExceptionMapper());
+        
+        environment.servlets().setSessionHandler(new SessionHandler());
     }
 }
