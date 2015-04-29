@@ -6,7 +6,6 @@ import com.enterprisesolutions.providers.InvalidWebhookExceptionMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
@@ -39,12 +38,12 @@ public class WebhookResourceTest {
 
         assertThat(response.getStatus()).isEqualTo(204);
 
-        verify(verifier).verify("body", "key", "sig");
+        verify(verifier).verify("body", "sig");
     }
 
     @Test
     public void shouldReturnErrorIfSignatureInvalid() {
-        doThrow(new InvalidWebhookException("oh noes!")).when(verifier).verify("body", "key", "sig");
+        doThrow(new InvalidWebhookException("oh noes!")).when(verifier).verify("body", "sig");
 
         Response response = resources.client().target("/webhooks").request()
                 .header("Webhook-Key-Id", "key")
@@ -53,6 +52,6 @@ public class WebhookResourceTest {
 
         assertThat(response.getStatus()).isEqualTo(498);
 
-        verify(verifier).verify("body", "key", "sig");
+        verify(verifier).verify("body", "sig");
     }
 }

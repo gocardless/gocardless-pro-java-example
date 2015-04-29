@@ -4,6 +4,7 @@ import com.enterprisesolutions.core.WebhookVerifier;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gocardless.GoCardlessClient;
 import com.gocardless.GoCardlessClient.Environment;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -11,21 +12,24 @@ import javax.validation.constraints.NotNull;
 public class GoCardlessFactory {
     @JsonProperty
     @NotEmpty
-    private String apiKey;
+    private String accessToken;
 
     @JsonProperty
-    @NotEmpty
-    private String apiSecret;
+    private String webhookSecret;
 
     @JsonProperty
     @NotNull
     private Environment environment;
 
     public GoCardlessClient buildClient() {
-        return GoCardlessClient.create(apiKey, apiSecret, environment);
+        return GoCardlessClient.create(accessToken, environment);
     }
 
     public WebhookVerifier buildSignatureVerifier() {
-        return new WebhookVerifier(apiKey, apiSecret);
+        if (StringUtils.isBlank(webhookSecret)) {
+            return null;
+        }
+
+        return new WebhookVerifier(webhookSecret);
     }
 }

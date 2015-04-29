@@ -12,23 +12,14 @@ import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.io.BaseEncoding.base16;
 
 public class WebhookVerifier {
-    private final String apiKey;
     private final SecretKeySpec keySpec;
 
-    public WebhookVerifier(String apiKey, String apiSecret) {
-        this.apiKey = apiKey;
-        this.keySpec = new SecretKeySpec(apiSecret.getBytes(UTF_8), "HmacSHA256");
+    public WebhookVerifier(String secret) {
+        this.keySpec = new SecretKeySpec(secret.getBytes(UTF_8), "HmacSHA256");
     }
 
-    public void verify(String body, String key, String signature) {
-        verifyKey(key);
+    public void verify(String body, String signature) {
         verifySignature(body, signature);
-    }
-
-    private void verifyKey(String key) {
-        if (!StringUtils.equals(key, apiKey)) {
-            throw new InvalidWebhookException(String.format("Invalid API key (expected %s, got %s)", apiKey, key));
-        }
     }
 
     private void verifySignature(String body, String expectedSignature) {

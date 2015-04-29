@@ -18,10 +18,9 @@ public class WebhookResource {
     }
 
     @POST
-    public void handleWebhook(@HeaderParam("Webhook-Key-Id") String key,
-                              @HeaderParam("Webhook-Signature") String signature,
+    public void handleWebhook(@HeaderParam("Webhook-Signature") String signature,
                               String body) {
-        signatureVerifier.verify(body, key, signature);
+        signatureVerifier.verify(body, signature);
 
         LOGGER.info("Received webhook: body [{}]", body);
     }

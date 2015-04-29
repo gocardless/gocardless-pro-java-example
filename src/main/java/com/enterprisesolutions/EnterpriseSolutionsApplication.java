@@ -10,8 +10,6 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
-import io.dropwizard.jersey.sessions.HttpSessionFactory;
-import io.dropwizard.jersey.sessions.SessionFactoryProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -40,7 +38,9 @@ public class EnterpriseSolutionsApplication extends Application<EnterpriseSoluti
         environment.jersey().register(new RedirectFlowResource(goCardless));
 
         WebhookVerifier signatureVerifier = configuration.getGoCardless().buildSignatureVerifier();
-        environment.jersey().register(new WebhookResource(signatureVerifier));
+        if (signatureVerifier != null) {
+            environment.jersey().register(new WebhookResource(signatureVerifier));
+        }
 
         environment.jersey().register(new GoCardlessApiExceptionMapper());
         environment.jersey().register(new InvalidWebhookExceptionMapper());
