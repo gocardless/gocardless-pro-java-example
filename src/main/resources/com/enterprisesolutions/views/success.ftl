@@ -11,14 +11,20 @@
 </div>
 
 <div class="text-center">
-    <#if product??>
-        You are now renting a ${product.description} for £${product.price} per month.
-    <#else>
-        You are now renting an unknown product.
-    </#if>
+    <p>
+        <#if product??>
+            You are now renting a ${product.description} for £${product.price} per month.
+        <#else>
+            You are now renting an unknown product.
+        </#if>
 
-    <#if firstPaymentDate??>
-        The first payment will be taken on ${firstPaymentDate}.
+        <#if firstPaymentDate??>
+            The first payment will be taken on ${firstPaymentDate}.
+        </#if>
+    <p>
+
+    <#if mandateId??>
+        <p>Click <a href="/download?mandate=${mandateId}">here</a> to download your mandate.</p>
     </#if>
 </div>
 </@layout.template>

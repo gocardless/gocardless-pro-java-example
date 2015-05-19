@@ -12,11 +12,13 @@ import io.dropwizard.jersey.sessions.Session;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+import java.io.InputStream;
 import java.net.URI;
 
 import static com.gocardless.services.SubscriptionService.SubscriptionCreateRequest.IntervalUnit.MONTHLY;
@@ -64,6 +66,7 @@ public class RedirectFlowResource {
         RedirectFlow redirectFlow = goCardless.redirectFlows().complete(redirectFlowId)
                 .withSessionToken(session.getId())
                 .execute();
+        String mandateId = redirectFlow.getLinks().getMandate();
 
         Subscription subscription = goCardless.subscriptions().create()
                 .withAmount(product.getPrice() * 100)
@@ -71,12 +74,13 @@ public class RedirectFlowResource {
                 .withName(product.getDescription())
                 .withInterval(1)
                 .withIntervalUnit(MONTHLY)
-                .withLinksMandate(redirectFlow.getLinks().getMandate())
+                .withLinksMandate(mandateId)
                 .execute();
 
         URI successUri = UriBuilder.fromUri("/success")
                 .replaceQueryParam("product", product)
                 .replaceQueryParam("firstPaymentDate", subscription.getUpcomingPayments().get(0).getChargeDate())
+                .replaceQueryParam("mandateId", mandateId)
                 .build();
 
         return Response.seeOther(successUri).build();
@@ -85,7 +89,15 @@ public class RedirectFlowResource {
     @GET
     @Path("/success")
     public SuccessView success(@QueryParam("product") Product product,
-                               @QueryParam("firstPaymentDate") String firstPaymentDate) {
-        return new SuccessView(product, firstPaymentDate);
+                               @QueryParam("firstPaymentDate") String firstPaymentDate,
+                               @QueryParam("mandateId") String mandateId) {
+        return new SuccessView(product, firstPaymentDate, mandateId);
+    }
+
+    @GET
+    @Path("/download")
+    @Produces("application/pdf")
+    public InputStream downloadMandate(@QueryParam("mandate") String mandate) {
+        return goCardless.mandates().download(mandate).execute();
     }
 }
