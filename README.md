@@ -11,8 +11,7 @@ The app can be seen running at [https://gocardless-pro-java-example.herokuapp.co
 First, register a sandbox account [here](https://manage-sandbox.gocardless.com/), and grab an API key and secret from the dashboard.  Then:
 
 ```
-export GC_API_KEY=...
-export GC_API_SECRET=...
+export GC_ACCESS_TOKEN=...
 gradle jar
 java -jar build/libs/enterprise-solutions.jar server config.yml
 ```
