@@ -10,7 +10,6 @@ mainClassName = 'com.enterprisesolutions.EnterpriseSolutionsApplication'
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
