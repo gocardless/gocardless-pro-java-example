@@ -5,6 +5,7 @@ import com.enterprisesolutions.views.HomeView;
 import com.enterprisesolutions.views.SuccessView;
 import com.gocardless.GoCardlessClient;
 import com.gocardless.resources.Creditor;
+import com.gocardless.resources.MandatePdf;
 import com.gocardless.resources.RedirectFlow;
 import com.gocardless.resources.Subscription;
 import io.dropwizard.jersey.sessions.Session;
@@ -96,8 +97,8 @@ public class RedirectFlowResource {
 
     @GET
     @Path("/download")
-    @Produces("application/pdf")
-    public InputStream downloadMandate(@QueryParam("mandate") String mandate) {
-        return goCardless.mandates().download(mandate).execute();
+    public Response downloadMandate(@QueryParam("mandate") String mandate) {
+        MandatePdf mandatePdf = goCardless.mandatePdfs().create().withLinksMandate(mandate).execute();
+        return Response.seeOther(URI.create(mandatePdf.getUrl())).build();
     }
 }
