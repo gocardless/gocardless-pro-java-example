@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.gocardless:gocardless-pro:0.5.0'
+    compile 'com.gocardless:gocardless-pro:0.5.1'
 
     compile 'io.dropwizard:dropwizard-core:0.8.1'
     compile 'io.dropwizard:dropwizard-assets:0.8.1'
