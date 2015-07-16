@@ -15,11 +15,11 @@ repositories {
 dependencies {
     compile 'com.gocardless:gocardless-pro:1.0.0'
 
-    compile 'io.dropwizard:dropwizard-core:0.8.1'
-    compile 'io.dropwizard:dropwizard-assets:0.8.1'
-    compile 'io.dropwizard:dropwizard-views-freemarker:0.8.1'
+    compile 'io.dropwizard:dropwizard-core:0.8.2'
+    compile 'io.dropwizard:dropwizard-assets:0.8.2'
+    compile 'io.dropwizard:dropwizard-views-freemarker:0.8.2'
 
-    testCompile 'io.dropwizard:dropwizard-testing:0.8.1'
+    testCompile 'io.dropwizard:dropwizard-testing:0.8.2'
 }
 
 jar {
