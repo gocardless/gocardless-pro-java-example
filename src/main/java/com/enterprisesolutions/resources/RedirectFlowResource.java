@@ -42,8 +42,6 @@ public class RedirectFlowResource {
     public Response startFlow(@Session HttpSession session,
                               @Context UriInfo uriInfo,
                               @QueryParam("product") Product product) {
-        Creditor creditor = goCardless.creditors().list().execute().getItems().get(0);
-
         URI redirectUri = UriBuilder.fromUri(uriInfo.getRequestUri())
                 .replacePath("/redirect")
                 .replaceQueryParam("product", product)
@@ -53,7 +51,6 @@ public class RedirectFlowResource {
                 .withDescription(String.format("%s (£%s per month)", product.getDescription(), product.getPrice()))
                 .withSessionToken(session.getId())
                 .withSuccessRedirectUrl(redirectUri.toString())
-                .withLinksCreditor(creditor.getId())
                 .execute();
 
         return Response.seeOther(URI.create(flow.getRedirectUrl())).build();
