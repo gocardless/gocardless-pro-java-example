@@ -12,14 +12,19 @@ repositories {
     mavenCentral()
 }
 
+def dependencyVersions = [
+    goCardless: '1.2.0',
+    dropwizard: '0.8.2'
+]
+
 dependencies {
-    compile 'com.gocardless:gocardless-pro:1.2.0'
+    compile group: "com.gocardless", name: "gocardless-pro", version: dependencyVersions.goCardless
 
-    compile 'io.dropwizard:dropwizard-core:0.8.2'
-    compile 'io.dropwizard:dropwizard-assets:0.8.2'
-    compile 'io.dropwizard:dropwizard-views-freemarker:0.8.2'
+    compile group: "io.dropwizard", name: "dropwizard-core", version: dependencyVersions.dropwizard
+    compile group: "io.dropwizard", name: "dropwizard-assets", version: dependencyVersions.dropwizard
+    compile group: "io.dropwizard", name: "dropwizard-views-freemarker", version: dependencyVersions.dropwizard
 
-    testCompile 'io.dropwizard:dropwizard-testing:0.8.2'
+    testCompile group: "io.dropwizard", name: "dropwizard-testing", version: dependencyVersions.dropwizard
 }
 
 jar {
@@ -33,7 +38,7 @@ jar {
 }
 
 run {
-    args 'server'
+    args ['server']
 }
 
 task stage(dependsOn: ['clean', 'jar'])
