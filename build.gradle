@@ -14,7 +14,7 @@ repositories {
 
 def dependencyVersions = [
     goCardless: '1.4.0',
-    dropwizard: '0.8.2'
+    dropwizard: '0.8.3'
 ]
 
 dependencies {
