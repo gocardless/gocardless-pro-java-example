@@ -8,7 +8,7 @@ The app can be seen running at [https://gocardless-pro-java-example.herokuapp.co
 
 ## Running the app locally
 
-First, register a sandbox account [here](https://manage-sandbox.gocardless.com/), and grab an API key and secret from the dashboard.  Then:
+First, register a sandbox account [here](https://manage-sandbox.gocardless.com/), and grab an access token from the dashboard.  Then:
 
 ```
 export GC_ACCESS_TOKEN=...
