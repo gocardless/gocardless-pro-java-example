@@ -1,5 +1,4 @@
 server:
-    type: default
     applicationConnectors:
         -   type: http
             port: ${PORT:-8080}

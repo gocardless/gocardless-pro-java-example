@@ -1,3 +1,7 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
 apply plugin: 'java'
 apply plugin: 'application'
 
@@ -27,11 +31,13 @@ dependencies {
     testCompile group: "io.dropwizard", name: "dropwizard-testing", version: dependencyVersions.dropwizard
 }
 
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+}
+
 jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }}
-
-    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
-
     manifest {
         attributes 'Main-Class': mainClassName
     }
