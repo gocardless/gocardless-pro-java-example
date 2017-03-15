@@ -13,7 +13,7 @@ First, register a sandbox account [here](https://manage-sandbox.gocardless.com/)
 ```
 export GC_ACCESS_TOKEN=...
 gradle jar
-java -jar build/libs/enterprise-solutions.jar server config.yml
+java -jar build/libs/enterprise-solutions-all.jar server config.yml
 ```
 
 The app will be running at [http://localhost:8080](http://localhost:8080).
