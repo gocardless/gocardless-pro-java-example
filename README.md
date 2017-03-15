@@ -12,7 +12,7 @@ First, register a sandbox account [here](https://manage-sandbox.gocardless.com/)
 
 ```
 export GC_ACCESS_TOKEN=...
-gradle jar
+gradle shadowJar
 java -jar build/libs/enterprise-solutions-all.jar server config.yml
 ```
 
