@@ -22,7 +22,9 @@ public class GoCardlessFactory {
     private Environment environment;
 
     public GoCardlessClient buildClient() {
-        return GoCardlessClient.create(accessToken, environment);
+        return GoCardlessClient.newBuilder(accessToken)
+            .withEnvironment(environment)
+            .build();
     }
 
     public WebhookVerifier buildSignatureVerifier() {
