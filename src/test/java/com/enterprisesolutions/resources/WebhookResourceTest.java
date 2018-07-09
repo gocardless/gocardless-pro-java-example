@@ -1,57 +1,50 @@
 package com.enterprisesolutions.resources;
 
-import com.enterprisesolutions.core.WebhookVerifier;
-import com.enterprisesolutions.exceptions.InvalidWebhookException;
-import com.enterprisesolutions.providers.InvalidWebhookExceptionMapper;
+import com.enterprisesolutions.providers.InvalidSignatureExceptionMapper;
+import com.google.common.io.Resources;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import static com.google.common.base.Charsets.UTF_8;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 public class WebhookResourceTest {
-    private static final WebhookVerifier verifier = mock(WebhookVerifier.class);
+    private static final String WEBHOOK_SECRET = "ElfJ-3tF9I_zutNVK2lBABQrw-BgAhkZKIlvmbgk";
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new WebhookResource(verifier))
-            .addProvider(new InvalidWebhookExceptionMapper())
+            .addResource(new WebhookResource(WEBHOOK_SECRET))
+            .addProvider(new InvalidSignatureExceptionMapper())
             .build();
 
-    @Before
-    public void setUp() {
-        reset(verifier);
-    }
-
     @Test
-    public void shouldReturnOkIfSignatureValid() {
+    public void shouldReturnOkIfSignatureValid() throws Exception {
+        String signature = "4d48a688e8bd6c313e3eecc78fa55b3e4ae23c65e70cf35038010f47742fb670";
+        String body = Resources.toString(Resources.getResource("webhook.json"), UTF_8);
+
         Response response = resources.client().target("/webhooks").request()
                 .header("Webhook-Key-Id", "key")
-                .header("Webhook-Signature", "sig")
-                .post(Entity.entity("body", APPLICATION_JSON_TYPE));
+                .header("Webhook-Signature", signature)
+                .post(Entity.entity(body, APPLICATION_JSON_TYPE));
 
         assertThat(response.getStatus()).isEqualTo(204);
-
-        verify(verifier).verify("body", "sig");
     }
 
     @Test
-    public void shouldReturnErrorIfSignatureInvalid() {
-        doThrow(new InvalidWebhookException("oh noes!")).when(verifier).verify("body", "sig");
+    public void shouldReturnErrorIfSignatureInvalid() throws Exception {
+        String signature = "4d48a688e8bd6c313e3eecc78fa55b3e4ae23c65e70cf35038010f47742fb671";
+        String body = Resources.toString(Resources.getResource("webhook.json"), UTF_8);
 
         Response response = resources.client().target("/webhooks").request()
                 .header("Webhook-Key-Id", "key")
-                .header("Webhook-Signature", "sig")
-                .post(Entity.entity("body", APPLICATION_JSON_TYPE));
+                .header("Webhook-Signature", signature)
+                .post(Entity.entity(body, APPLICATION_JSON_TYPE));
 
         assertThat(response.getStatus()).isEqualTo(498);
-
-        verify(verifier).verify("body", "sig");
     }
 }
