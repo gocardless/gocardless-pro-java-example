@@ -1,7 +1,6 @@
 package com.enterprisesolutions.resources;
 
-import com.enterprisesolutions.core.WebhookVerifier;
-import com.enterprisesolutions.providers.InvalidWebhookExceptionMapper;
+import com.enterprisesolutions.providers.InvalidSignatureExceptionMapper;
 import com.google.common.io.Resources;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.ClassRule;
@@ -15,12 +14,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WebhookResourceTest {
-    private static WebhookVerifier verifier = new WebhookVerifier("ElfJ-3tF9I_zutNVK2lBABQrw-BgAhkZKIlvmbgk");
+    private static final String WEBHOOK_SECRET = "ElfJ-3tF9I_zutNVK2lBABQrw-BgAhkZKIlvmbgk";
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new WebhookResource(verifier))
-            .addProvider(new InvalidWebhookExceptionMapper())
+            .addResource(new WebhookResource(WEBHOOK_SECRET))
+            .addProvider(new InvalidSignatureExceptionMapper())
             .build();
 
     @Test

@@ -1,8 +1,7 @@
 package com.enterprisesolutions;
 
-import com.enterprisesolutions.core.WebhookVerifier;
 import com.enterprisesolutions.providers.GoCardlessApiExceptionMapper;
-import com.enterprisesolutions.providers.InvalidWebhookExceptionMapper;
+import com.enterprisesolutions.providers.InvalidSignatureExceptionMapper;
 import com.enterprisesolutions.resources.RedirectFlowResource;
 import com.enterprisesolutions.resources.WebhookResource;
 import com.gocardless.GoCardlessClient;
@@ -33,18 +32,14 @@ public class EnterpriseSolutionsApplication extends Application<EnterpriseSoluti
     }
 
     @Override
-    public void run(EnterpriseSolutionsConfiguration configuration, Environment environment) throws Exception {
+    public void run(EnterpriseSolutionsConfiguration configuration, Environment environment) {
         GoCardlessClient goCardless = configuration.getGoCardless().buildClient();
         environment.jersey().register(new RedirectFlowResource(goCardless));
-
-        WebhookVerifier signatureVerifier = configuration.getGoCardless().buildSignatureVerifier();
-        if (signatureVerifier != null) {
-            environment.jersey().register(new WebhookResource(signatureVerifier));
-        }
+        environment.jersey().register(new WebhookResource(configuration.getGoCardless().getWebhookSecret()));
 
         environment.jersey().register(new GoCardlessApiExceptionMapper());
-        environment.jersey().register(new InvalidWebhookExceptionMapper());
-        
+        environment.jersey().register(new InvalidSignatureExceptionMapper());
+
         environment.servlets().setSessionHandler(new SessionHandler());
     }
 }
