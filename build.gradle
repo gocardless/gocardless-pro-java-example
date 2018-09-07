@@ -22,7 +22,7 @@ def dependencyVersions = [
 ]
 
 dependencies {
-    compile group: "com.gocardless", name: "gocardless-pro", version: dependencyVersions.goCardless
+    compile group: "com.gocardless", name: "gocardless-pro", version: 3.7.1
 
     compile group: "io.dropwizard", name: "dropwizard-core", version: dependencyVersions.dropwizard
     compile group: "io.dropwizard", name: "dropwizard-assets", version: dependencyVersions.dropwizard
