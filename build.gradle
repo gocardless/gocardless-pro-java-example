@@ -17,12 +17,12 @@ repositories {
 }
 
 ext {
-    goCardlessVerison = '3.7.0'
+    goCardlessVersion = '3.7.0'
     dropwizardVersion = '1.1.0'
 }
 
 dependencies {
-    compile group: "com.gocardless", name: "gocardless-pro", version: "$goCardlessVerison"
+    compile group: "com.gocardless", name: "gocardless-pro", version: "$goCardlessVersion"
 
     compile group: "io.dropwizard", name: "dropwizard-core", version: "$dropwizardVersion"
     compile group: "io.dropwizard", name: "dropwizard-assets", version: "$dropwizardVersion"
