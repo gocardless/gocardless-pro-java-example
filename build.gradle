@@ -16,19 +16,19 @@ repositories {
     mavenCentral()
 }
 
-def dependencyVersions = [
-    goCardless: '3.7.0',
-    dropwizard: '1.1.0'
-]
+ext {
+    goCardlessVerison = '3.7.0'
+    dropwizardVersion = '1.1.0'
+}
 
 dependencies {
-    compile group: "com.gocardless", name: "gocardless-pro", version: dependencyVersions.goCardless
+    compile group: "com.gocardless", name: "gocardless-pro", version: "$goCardlessVerison"
 
-    compile group: "io.dropwizard", name: "dropwizard-core", version: dependencyVersions.dropwizard
-    compile group: "io.dropwizard", name: "dropwizard-assets", version: dependencyVersions.dropwizard
-    compile group: "io.dropwizard", name: "dropwizard-views-freemarker", version: dependencyVersions.dropwizard
+    compile group: "io.dropwizard", name: "dropwizard-core", version: "$dropwizardVersion"
+    compile group: "io.dropwizard", name: "dropwizard-assets", version: "$dropwizardVersion"
+    compile group: "io.dropwizard", name: "dropwizard-views-freemarker", version: "$dropwizardVersion"
 
-    testCompile group: "io.dropwizard", name: "dropwizard-testing", version: dependencyVersions.dropwizard
+    testCompile group: "io.dropwizard", name: "dropwizard-testing", version: "$dropwizardVersion"
     testCompile "org.mockito:mockito-core:1.+"
 }
 
