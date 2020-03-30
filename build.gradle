@@ -18,7 +18,7 @@ repositories {
 
 ext {
     goCardlessVersion = '3.14.0'
-    dropwizardVersion = '2.0.2'
+    dropwizardVersion = '2.0.5'
 }
 
 dependencies {
