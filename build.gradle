@@ -13,12 +13,13 @@ targetCompatibility = '1.8'
 mainClassName = 'com.enterprisesolutions.EnterpriseSolutionsApplication'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 ext {
-    goCardlessVersion = '4.2.0'
     dropwizardVersion = '2.0.10'
+    goCardlessVersion = '5.0.0'
 }
 
 dependencies {
@@ -30,6 +31,12 @@ dependencies {
 
     testCompile group: "io.dropwizard", name: "dropwizard-testing", version: "$dropwizardVersion"
     testCompile "org.mockito:mockito-core:1.+"
+}
+
+configurations.all {
+    exclude group:"ch.qos.logback", module: "logback-classic"
+    exclude group:"ch.qos.logback", module: "logback-access"
+    exclude group:"org.slf4j", module: "log4j-over-slf4j"
 }
 
 shadowJar {

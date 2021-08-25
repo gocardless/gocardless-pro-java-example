@@ -15,6 +15,10 @@ import io.dropwizard.views.ViewBundle;
 import org.eclipse.jetty.server.session.SessionHandler;
 
 public class EnterpriseSolutionsApplication extends Application<EnterpriseSolutionsConfiguration> {
+    @Override
+    protected void bootstrapLogging() {
+    }
+
     public static void main(String[] args) throws Exception {
         new EnterpriseSolutionsApplication().run(args);
     }
