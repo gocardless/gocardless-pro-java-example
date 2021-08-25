@@ -2,6 +2,10 @@ server:
     applicationConnectors:
         -   type: http
             port: ${PORT:-8080}
+    requestLog:
+        type: external
+logging:
+    type: external
 
 goCardless:
     accessToken: ${GC_ACCESS_TOKEN:-}
